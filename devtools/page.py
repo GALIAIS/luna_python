@@ -38,6 +38,58 @@ def open_page(chrome_id, url):
         return None
 
 
+def get_pages(chrome_id):
+    # 封装请求参数
+    request_data = {
+        "chrome_id": chrome_id,
+    }
+    # 发送 HTTP 请求
+    response = requests.post(get_server_address() + "/get_pages", data=request_data)
+    # 解析返回结果
+    if response.status_code == 200:
+        response_data = response.json()
+        print(">>>>>", response_data)
+        page_ids = response_data.get("page_ids", None)
+        return page_ids if isinstance(page_ids, list) else None
+    else:
+        return None
+
+
+def switch_page(chrome_id, page_id):
+    # 封装请求参数
+    request_data = {
+        "chrome_id": chrome_id,
+        "page_id": page_id,
+    }
+    # 发送 HTTP 请求
+    response = requests.post(get_server_address() + "/switch_page", data=request_data)
+    # 解析返回结果
+    if response.status_code == 200:
+        response_data = response.json()
+        result = response_data.get("result", None)
+        return result
+    else:
+        return None
+
+
+def listen_network(chrome_id, page_id, port, event_name):
+    # 封装请求参数
+    request_data = {
+        "chrome_id": chrome_id,
+        "page_id": page_id,
+        "port": f":{port}/receive/{event_name}",
+    }
+    # 发送 HTTP 请求
+    response = requests.post(get_server_address() + "/listen_network", data=request_data)
+    # 解析返回结果
+    if response.status_code == 200:
+        response_data = response.json()
+        page_id = response_data.get("page_id", None)
+        return page_id
+    else:
+        return None
+
+
 def close_page(page_id):
     # 封装请求参数
     request_data = {

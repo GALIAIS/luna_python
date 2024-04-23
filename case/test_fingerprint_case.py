@@ -3,9 +3,11 @@ import time
 import devtools.browser as luna
 import devtools.page as page
 import common.server_management as init
+from common.kill_process import kill_process
 
 """
 测试目的:希望你可以正常使用指纹
+<如果你未授权、除了user-agent>其他指纹并不会生效
 """
 
 
@@ -17,14 +19,19 @@ def main():
     if not init.start(9876):
         print("启动服务-失败")
 
+    kill_process()
     """
         chromium_path 是必须要传入的参数、就是你抗指纹浏览器所在的路径 如 c:\\luna\\Default\\chrome.exe
     """
     chromium_path = "/Users/hongyuji/Documents/workspace/golang/Chromium.app/Contents/MacOS/Chromium"
 
+    r2 = '''"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"'''
     args = [
         "--luna_cavans_random_str=B3B4",
-        "--luna_user_agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
+        "--luna_user_agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "--luna_header_1=User-Agent-lunareplace-Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        "--luna_header_2=sec-ch-ua-lunareplace-" + r2,
+        "--luna_header_2=Sec-Ch-Ua-lunareplace-" + r2,
         "--luna_platform=win64",
         "--luna_languages=en-GB",
         "--luna_deviceMemory=8",
@@ -41,7 +48,7 @@ def main():
     page_id = page.open_page(chrome_id, "http://www.baidu.com")
 
     print("便于您查看指纹、暂停1分钟")
-    time.sleep(60)
+    time.sleep(60000)
 
     page.close_page(page_id)
     # 关闭浏览器
