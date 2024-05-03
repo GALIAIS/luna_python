@@ -4,19 +4,37 @@
 
 golang版本地址:https://github.com/musiclover789/luna
 
+
+
+
 本版本是基于golang的版本封装的python版本;
 
 缺点是相对于golang版本更加年轻,优点是方便比较熟悉python的开发者、如果您发现任何bug或者
 
 本框架不太完善的地方,欢迎提出任何意见，酌情优化。但是目前python并未封装 视觉部分。
 
+
+
+
+
+
 作者QQ: 80258153
 
 技术交流群:524592021
 
+
+
+
+
+
+
 Luna 是一款强大的第三方库，专为抗指纹自动化爬虫而设计。通过利用视觉特征和先进的算法，Luna 提供了一种有效的方法来对抗现代爬虫检测技术，保护您的网络资源免受恶意爬取和滥用。
 
 如果您有兴趣封装其他语言的框架，您可以参考 https://github.com/musiclover789/luna_http 用http请求的方式来控制luna-抗指纹浏览器
+
+
+
+**所有最新功能、请先参考golang版本；参数都是通用的，只是字符串而已。**
 
 ## 功能亮点
 
@@ -32,17 +50,22 @@ Luna 是一款强大的第三方库，专为抗指纹自动化爬虫而设计。
 
 - **绕过检测技术：** 具备绕过常见爬虫检测技术的能力，确保您的爬虫不容易被拦截。
 
-  效果展示-加载可能有些慢 [![效果展示-g](https://camo.githubusercontent.com/a926b02080b6da19138811d2b7c9cd7e9a8e527455396a7ec5aebdd71780ad26/68747470733a2f2f692e6962622e636f2f79506b5a4c64302f6d6e676769666c61622d636f6d707265737365642d32303233313032362d3231353235332d6d696e2e676966)](https://camo.githubusercontent.com/a926b02080b6da19138811d2b7c9cd7e9a8e527455396a7ec5aebdd71780ad26/68747470733a2f2f692e6962622e636f2f79506b5a4c64302f6d6e676769666c61622d636f6d707265737365642d32303233313032362d3231353235332d6d696e2e676966)
+   [![效果展示-g](https://camo.githubusercontent.com/a926b02080b6da19138811d2b7c9cd7e9a8e527455396a7ec5aebdd71780ad26/68747470733a2f2f692e6962622e636f2f79506b5a4c64302f6d6e676769666c61622d636f6d707265737365642d32303233313032362d3231353235332d6d696e2e676966)](https://camo.githubusercontent.com/a926b02080b6da19138811d2b7c9cd7e9a8e527455396a7ec5aebdd71780ad26/68747470733a2f2f692e6962622e636f2f79506b5a4c64302f6d6e676769666c61622d636f6d707265737365642d32303233313032362d3231353235332d6d696e2e676966)
 
 ## 为什么选择 Luna
 
+![效果展示-加载可能有些慢](https://i.ibb.co/nftHyHW/511714127971-pic.jpg)
+
+经过大量测试，目前基本可以过掉主流抗指纹识别;
+
+```
+测试网址:
+https://www.browserscan.net/
+https://uutool.cn/browser/
+https://abrahamjuliot.github.io/creepjs/
+```
 
 
-使用 Luna，您可以快速构建出智能、高效、难以被识别的爬虫程序。不论是在开发自动化测试脚本、数据采集应用还是其他需要模拟用户行为的场景中，Luna 都能为您提供可靠的解决方案。
-
-不论您是开发人员、数据科学家还是网络安全专家，Luna 都是您在抗指纹爬虫领域的得力助手。让 Luna 成为您的选择，保护您的网络资源，确保您的数据安全。
-
-目前支持的操作系统是 Windows，且仅限于 x86-64 架构。已经在 Windows x86-64 硬件环境下进行了测试。其他操作系统或平台的测试尚不充分，因此不建议在这些系统上使用。
 
 ## 开始使用 Luna
 
@@ -52,76 +75,72 @@ Luna 是一款强大的第三方库，专为抗指纹自动化爬虫而设计。
 
 示例代码部分也可以查看源码的case包下内容。
 
+## 抗指纹特性
+
+- ### 目前支持指纹项:
+
+- 所有抗指纹部分设置请直接参考golang https://github.com/musiclover789/luna 版本的设置
+
+- golang版本的更新较快，python有些陈旧，所以不在单独写文档列举了。
+
+- **无论您使用哪个版本、请务必用luna对应框架，否则指纹及其容易被识别，几乎作用减少30%**
+
+  |      | 指纹项                      | 技术方案                            |      | win  | mac  |
+  | ---- | --------------------------- | ----------------------------------- | ---- | ---- | ---- |
+  |      | user_agent指纹              | headless模式下、也会生效            |      |      |      |
+  |      | canvas指纹                  | 真实指纹库、难以识别                |      |      |      |
+  |      | webgl指纹                   |                                     |      |      |      |
+  |      | platform平台                |                                     |      |      |      |
+  |      | timezone时区                |                                     |      |      |      |
+  |      | timezone_offset时区偏移量   |                                     |      |      |      |
+  |      | languages语言               | 无论是国际API、还是navigator 均生效 |      |      |      |
+  |      | userAgentData               |                                     |      |      |      |
+  |      | header 修改                 | 可以修改http请求协议层header        |      |      |      |
+  |      | deviceMemory                |                                     |      |      |      |
+  |      | hardwareConcurrency         |                                     |      |      |      |
+  |      | UNMASKED_VENDOR_WEBGL       | 显卡                                |      |      |      |
+  |      | UNMASKED_RENDERER_WEBGL     | 显卡                                |      |      |      |
+  |      | GL_VERSION                  | 显卡                                |      |      |      |
+  |      | GL_SupportedExtensions      | 显卡                                |      |      |      |
+  |      | GL_VENDOR                   | 显卡                                |      |      |      |
+  |      | GL_RENDERER                 | 显卡                                |      |      |      |
+  |      | GL_SHADING_LANGUAGE_VERSION | 显卡                                |      |      |      |
+  |      | 是否webdriver               | 已处理                              |      |      |      |
+  |      | 是否brave                   | 已处理                              |      |      |      |
+  |      | 是否selenium                | 已处理                              |      |      |      |
+  |      | 是否来自于真实键盘          | 已处理                              |      |      |      |
+  |      | 是否来自于真实鼠标          | 已处理                              |      |      |      |
+  |      | 鼠标移动轨迹                | 已处理                              |      |      |      |
+  |      | 其他机器人检测              | 已处理                              |      |      |      |
+  |      | webRTC                      | 可以自行设置出口ip                  |      |      |      |
+  |      | screen                      | 已处理                              |      |      |      |
+  |      | 声卡指纹                    | 0-1000任意整数                      |      |      |      |
+  |      | 屏幕触点数量                | 手机端需要，其他并不需要            |      |      |      |
+  |      | 语音合成器                  | 支持自定义                          |      |      |      |
+
+理论上，Luna 可以成功对抗这些指纹技术，使您的爬虫在操作时不容易被识别。更多详细信息请查看我们的[文档](https://musiclover789.github.io/lunadocs/)。
+
 ## Luna浏览器部分
 
 
 
-浏览器部分是 Luna 的核心功能之一，它使您能够执行抗指纹爬虫任务。请注意，您需要下载适用于 Luna 的专用浏览器才能实现指纹防识别。该浏览器的大小约为 2GB，因此需要一些时间来下载。如果您没有抗指纹需求、可以直接用您的chrome或其他浏览器即可。
-
 目前，我们已经将浏览器文件上传到 百度 网盘，并提供了下载链接：
 
-链接: https://pan.baidu.com/s/14EZw9DvCtO998LOwo_epvA 提取码: mm6s
+老版本-win-[2GB]链接: https://pan.baidu.com/s/14EZw9DvCtO998LOwo_epvA 提取码: mm6s
 
-### 如何测试
+新版本-win-[670MB]连接:链接：https://pan.baidu.com/s/1S3ZdbFHTtaZgW2dInc6JDA 提取码：3pmd
 
+Mac-arm版[114MB]:链接: https://pan.baidu.com/s/1au226sENM5XcoB7SPhEYZA 提取码: lbfs
 
+<Mac版本仅供开发测试使用，部分抗指纹功能不可用，方便Mac开发人员进行开发-完全免费-无限制>
 
-正常使用情况下，这部分完全代码来控制。但是为了方便您测试luna浏览器的基础功能，可以使用手动的方式来测试。
+<win版本-没有授权文件的用户,仅可以测试useragent指纹部分,其他指纹不会生效>
 
-原理：这个是基于chromium的源代码，对内核进行修改编译的。
+如果不是历史原因、请不要使用老版本；
 
-测试步骤：
-
-1、在您的c盘根目录，手工建立一个文件夹luna-temp 示例: C:\luna-temp
-
-2、打开浏览器，有些同学不太知道怎么打开浏览器，就是下载好后，找到目录里面的 chrome.exe 用鼠标双击打开. ps:" I 服了 you ，如果不知道怎么双击打开，我建议你直接放弃研究本项目"
-
-3、你会发现，C:\luna-temp 目录里面会有一个uname.txt文件，你测试的时候无需关心。
-
-4、在这个目录下，手工创建一个文件，命名为1696987203497907900
-
-也就是路径应该是 C:\luna-temp\1696987203497907900
-
-注意不要有.txt的扩展名。
-
-然后用记事本打开，黏贴如下内容：
-
-```
-luna_user_agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
-luna_platform=win64
-luna_timezone=Europe/London
-luna_timezone_offset=3600000
-luna_languages=en-GB
-luna_userAgentData=Google Chrome:92-luna-Chromium:92-luna-Not-A.Brand:24-luna-platform:win32-luna-mobile:false-luna-platform_version:6.1-luna-ua_full_version:92.0.4515.186-luna-model:PC-luna-architecture:x86_64
-luna_header_1=User-Agent-lunareplace-Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
-luna_header_2=sec-ch-ua-arch-lunaremove-
-luna_header_3=sec-ch-ua-platform-lunaremove-
-luna_header_4=accept-language-lunareplace-en;q=0.9
-luna_deviceMemory=8
-luna_hardwareConcurrency=16
-luna_UNMASKED_VENDOR_WEBGL=Intel Corporation
-luna_UNMASKED_RENDERER_WEBGL=Intel(R) UHD Graphics 620
-luna_GL_VERSION=WebGL 1.0 (OpenGL ES 3.0 Intel(R) UHD Graphics 620)
-luna_GL_SupportedExtensions=["ANGLE_instanced_arrays", "EXT_blend_minmax", "EXT_color_buffer_half_float", "EXT_disjoint_timer_query", "EXT_float_blend", "EXT_frag_depth", "EXT_shader_texture_lod", "EXT_texture_compression_rgtc", "EXT_texture_filter_anisotropic", "WEBKIT_EXT_texture_filter_anisotropic", "EXT_sRGB", "KHR_parallel_shader_compile", "OES_element_index_uint", "OES_fbo_render_mipmap", "OES_standard_derivatives", "OES_texture_float", "OES_texture_float_linear", "OES_texture_half_float", "OES_texture_half_float_linear", "OES_vertex_array_object", "WEBGL_color_buffer_float", "WEBGL_compressed_texture_s3tc", "WEBKIT_WEBGL_compressed_texture_s3tc", "WEBGL_compressed_texture_s3tc_srgb", "WEBGL_debug_renderer_info", "WEBGL_debug_shaders", "WEBGL_depth_texture", "WEBKIT_WEBGL_depth_texture", "WEBGL_draw_buffers", "WEBGL_lose_context", "WEBKIT_WEBGL_lose_context", "WEBGL_multi_draw"]
-luna_GL_VENDOR=WebKit
-luna_GL_RENDERER=WebKit WebGL
-luna_GL_SHADING_LANGUAGE_VERSION=WebGL GLSL ES 1.0 (OpenGL ES GLSL ES 1.0 Chromium)
-luna_cavans_random_str=B3B4
-remote-debugging-port=55392
-user-data-dir=C:\workspace\tempcatch\chromium_user_data_1696987203497907900
-```
+如何获取授权文件联系作者获取;
 
 
-
-退出浏览器，再次打开。理论上你可以抓包看一下，无论你访问任何网站，无论你的电脑是什么配置，你的useragent会改成配置文件里面的
-
-Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36
-
-还记得这个配置文件的命名么？1696987203497907900
-
-这个是当前毫秒数而已，如果多个配置文件，他只会选用最新的。也就是最新的当前毫秒数，正常情况下，我们都是用程序去调用，并不会人工去测试这些东西。
-
-仅提供 手工测试 爱好者。
 
 ## 快速入门
 
@@ -181,27 +200,9 @@ if __name__ == "__main__":
 
 
 
-## 1. 抗指纹特性
 
 
-
-Luna 强大的抗指纹技术可以模拟和对抗多种常见爬虫检测技术，包括但不限于：
-
-- 时区指纹
-- 显卡指纹
-- User-Agent 指纹
-- Platform 指纹
-- Languages 指纹
-- Device Memory 指纹
-- Hardware Concurrency 指纹
-- Canvas 指纹
-- 鼠标滚动指纹（真实很难被识别）
-- 鼠标移动轨迹（真实很难被识别）
-- 键盘真实输入（包括内置转输入法等）
-
-理论上，Luna 可以成功对抗这些指纹技术，使您的爬虫在操作时不容易被识别。更多详细信息请查看我们的[文档](https://musiclover789.github.io/lunadocs/)。
-
-## 2. 基于视觉的操作
+## 基于视觉的操作
 
 
 
@@ -209,19 +210,19 @@ Luna 基于视觉的页面操作方法让您可以使用截图的方式来控制
 
 这一特性的最大优势在于速度，因为您可以像人一样看到什么就可以操作什么。这样的交互方式使得 Luna 极为高效。
 
-## 3. 代理 IP 多样性
+## 代理 IP 多样性
 
 
 
 Luna 支持市面上所有类型的代理 IP，包括 HTTP、HTTPS 和 SOCKS5，无论代理 IP 是否需要密码，Luna 都完全兼容。理论上，使用 Luna 进行爬取的请求将无法被追踪。
 
-## 4. 多进程和多线程
+## 多进程和多线程
 
 
 
 Luna 考虑到了多进程和多线程的应用场景，使得您可以并发执行多个任务，提高了爬虫的效率。
 
-## 5. 网络数据包过滤
+## 网络数据包过滤
 
 
 
@@ -263,7 +264,6 @@ def main():
     chromium_path = "/Users/hongyuji/Documents/workspace/golang/Chromium.app/Contents/MacOS/Chromium"
 
     args = [
-        "--luna_cavans_random_str=B3B4",
         "--luna_user_agent=Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
         "--luna_platform=win64",
         "--luna_languages=en-GB",
