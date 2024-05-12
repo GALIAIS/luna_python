@@ -1,10 +1,12 @@
-from bottle import Bottle, request
+from bottle import Bottle, request, run
+from gevent import monkey; monkey.patch_all()
 import threading
-
+import gevent.pool
 
 class SubscriptionHandler:
     _subscriptions = {}
     _lock = threading.Lock()
+    _pool = gevent.pool.Pool(1000)  # 设置一个协程池，大小为1000
 
     @classmethod
     def subscribe(cls, path, handler, method='GET'):
@@ -18,13 +20,17 @@ class SubscriptionHandler:
         with cls._lock:
             if path in cls._subscriptions and method in cls._subscriptions[path]:
                 subscriber_handler = cls._subscriptions[path][method]
-                # Start a new thread to handle the notification
-                thread = threading.Thread(target=subscriber_handler, args=(data,))
-                thread.start()
+                # 使用协程池处理通知
+                cls._pool.spawn(subscriber_handler, data)
 
 
 app = Bottle()
 
+# 设置最大请求体大小为 10MB
+app.max_request_size = 1024 * 1024 * 100  # 10MB
+
+# 设置最大请求头大小为 4KB
+app.max_request_header_size = 1024 * 4*100  # 4KB
 
 @app.route('/subscribe/<path:path>', method=['POST', 'GET'])
 def subscribe(path):
@@ -61,32 +67,9 @@ def start_event_server(r_port):
 
     # 定义启动 Bottle 服务器的函数
     def run_server():
-        app.run(host='127.0.0.1', port=r_port, debug=True)
+        run(app, host='127.0.0.1', port=r_port, server='gevent')
 
     # 创建一个线程来启动 Bottle 服务器
     server_thread = threading.Thread(target=run_server)
     server_thread.start()
 
-    # # 等待服务器启动
-    # print("等待 Bottle 服务器启动...")
-    # server_started.wait()
-    # print("Bottle 服务器已启动，可以执行其他操作了。")
-
-# def run_server(r_port):
-#     app.run(host='localhost', port=r_port, debug=True)
-
-# if __name__ == "__main__":
-#     server_thread = threading.Thread(target=run_server)
-#     server_thread.start()
-#
-#
-#     def custom_handler_get(data):
-#         print(f"Custom handler received data get : {data}")
-#
-#
-#     def custom_handler_post(data):
-#         print(f"Custom handler received data post : {data}")
-#
-#
-#     SubscriptionHandler.subscribe("23423qweewe4", custom_handler_get, 'GET')
-#     SubscriptionHandler.subscribe("3423weqwer", custom_handler_post, 'POST')
