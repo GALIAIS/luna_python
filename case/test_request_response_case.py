@@ -1,8 +1,9 @@
 from common.event_subscriber import start_event_server, SubscriptionHandler
 import devtools.browser as luna
 import devtools.page as page
-import common.server_management as init
+from common.kill_process import kill_process
 import time
+import common.server_management as init
 
 """
 测试
@@ -19,9 +20,13 @@ def main():
     start_event_server(event_port)
 
     print("-------?------")
+    # 测试时 为了防止干扰、关闭其他chromium进程。
+    kill_process()
     time.sleep(5)
+
     if not init.start(9876):
         print("启动服务-失败")
+
     """
         chromium_path 是必须要传入的参数、就是你抗指纹浏览器所在的路径 如 c:\\luna\\Default\\chrome.exe
     """
@@ -36,8 +41,22 @@ def main():
     """
     ##aaa只是个事件名称，叫什么无所谓，用于区别其他订阅事件的
     event_name = "aaa"
-    page_id = page.open_page_and_listen_network(chrome_id, "http://www.baidu.com", event_port, event_name)
+    page.open_page(chrome_id, "http://www.baidu.com")
+    # 调用get_pages函数获取page_id数组
+    time.sleep(3)
+    pages = page.get_pages(chrome_id)
 
+    if pages:
+        page_ids, page_urls, page_titles = pages
+        for child_page_id, page_url, page_title in zip(page_ids, page_urls, page_titles):
+            print("ID:", child_page_id)
+            print("URL:", page_url)
+            print("Title:", page_title)
+            if "baidu" in page_url:
+                print("开始监听！.....")
+                page.switch_page_and_listen(chrome_id, child_page_id, event_port, event_name)
+    else:
+        print("请求失败或返回数据为空")
     """
     订阅# 这个是一个自定义的函数custom_handler_post;函数data就是返回的response request responsebody数据
     """
@@ -50,7 +69,6 @@ def main():
        订阅-end
        """
     time.sleep(60)
-    page.close_page(page_id)
     # 关闭浏览器
     print("关闭浏览器", luna.close_browser(chrome_id))
 
